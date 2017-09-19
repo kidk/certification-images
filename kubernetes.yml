@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
       - name: api
-        image: "api:prod"
+        image: "kidk/certification-images-api:latest"
         ports:
         - containerPort: 8000
 ---
