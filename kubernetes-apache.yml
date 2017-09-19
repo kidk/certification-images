@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: apache
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: webserver
+  namespace: apache
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: webserver
+    spec:
+      containers:
+      - name: apache
+        image: "apache-custom:1.0"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver
+  labels:
+    app: webserver
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    nodePort: 32000
+    protocol: TCP
+  selector:
+    app: webserver
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: generator
+  namespace: apache
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: generator
+    spec:
+      containers:
+      - name: generator
+        image: kidk/training-images-generator
+        imagePullPolicy: Always
+        env:
+        - name: WEB_HOST
+          value: webserver
+        - name: RECEIVER_HOST
+          value: webserver
