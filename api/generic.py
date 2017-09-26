@@ -50,7 +50,7 @@ def config():
 
 # Data retrieval mode: return the data for the custom metrics
 def data():
-    content = json.loads(urllib2.urlopen("http://localhost/accounts/stats").read())
+    content = json.loads(urllib2.urlopen("http://localhost:8000/accounts/stats").read())
 
     print 'M1 {0}'.format(content['emails_sent'])
     print 'M2 {0}'.format(content['signins'])
