@@ -18,6 +18,7 @@ spec:
       containers:
       - name: worker
         image: "kidk/certification-images-worker"
+        imagePullPolicy: Always
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -33,7 +34,8 @@ spec:
     spec:
       containers:
       - name: api
-        image: "kidk/certification-images-api:latest"
+        image: "kidk/certification-images-api"
+        imagePullPolicy: Always
         ports:
         - containerPort: 8000
 ---
